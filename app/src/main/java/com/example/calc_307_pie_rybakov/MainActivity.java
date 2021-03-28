@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (flag) {
                     mDisplay.setTextSize(24);
-                    mDisplay.setText("На ноль делить нельзя!");
+                    mDisplay.setText(getResources().getString(R.string.error_zero));
 
                 } else {
                     mDisplay.setText(resultText);

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Calc_307_PIE_Rybakov</string>
+    <string name="error_zero">You cannot divide by zero!</string>
 </resources>
