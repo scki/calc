@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     Button mBack;
     Button mClear;
     Button mPlus;
+    Button mPercent;
     Button mDivide;
     Button mMultiply;
     Button mMinus;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         mPlus = findViewById(R.id.Plus);
         mMinus = findViewById(R.id.Minus);
         mDivide = findViewById(R.id.Divide);
+        mPercent = findViewById(R.id.Percent);
         mMultiply = findViewById(R.id.Multiply);
 
         mResult = findViewById(R.id.Result);
@@ -125,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         mPlus.setOnClickListener(operatorListener);
         mMinus.setOnClickListener(operatorListener);
         mDivide.setOnClickListener(operatorListener);
+        mPercent.setOnClickListener(operatorListener);
         mMultiply.setOnClickListener(operatorListener);
 
         View.OnClickListener resultListener = new View.OnClickListener() {
@@ -245,17 +248,38 @@ public class MainActivity extends AppCompatActivity {
         };
         mComma.setOnClickListener(commaListener);
 
+        View.OnClickListener percentListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPercentListener(v);
+            }
+
+            public void onPercentListener(View button) {
+                String display3 = getDisplayString(mDisplay);
+                float value = getDisplayFloat(mDisplay);
+
+                value = value / 100;
+                String resultText = floatToStringForDisplay(value);
+                displayText(resultText);
+            }
+        };
+        mPercent.setOnClickListener(percentListener);
+
     }
 
     private void displayText(String display, String display3) {
         display = display.replace('.', ',');
         mDisplay.setText(display);
+
         if (display3.equals("")) {
             mDisplay2.setText(display);
-        }
-        else {
+        } else {
             mDisplay4.setText(display);
         }
+    }
+    private void displayText(String display) {
+        display = display.replace('.', ',');
+        mDisplay.setText(display);
     }
 
     private String floatToStringForDisplay(float result) {
