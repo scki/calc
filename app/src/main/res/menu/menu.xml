@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Copy"
+        app:showAsAction="never"
+        android:title="Копировать" />
+    <item
+        android:id="@+id/Paste"
+        app:showAsAction="never"
+        android:title="Вставить" />
+    <item
+        android:id="@+id/Settings"
+        app:showAsAction="never"
+        android:title="Настройки" />
+    <item
+        android:id="@+id/About"
+        app:showAsAction="never"
+        android:title="О приложении" />
+</menu>

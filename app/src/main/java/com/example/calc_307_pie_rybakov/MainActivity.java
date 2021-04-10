@@ -2,7 +2,14 @@ package com.example.calc_307_pie_rybakov;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipDescription;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -208,8 +215,12 @@ public class MainActivity extends AppCompatActivity {
                 String display = getDisplayString(mDisplay);
                 String display3 = getDisplayString(mDisplay3);
 
-                display = display.substring(0, display.length() - 1);
-                displayText(display, display3);
+                if (display.length() == 1) {
+                    displayText("0");
+                } else {
+                    display = display.substring(0, display.length() - 1);
+                    displayText(display, display3);
+                }
             }
         };
         mBack.setOnClickListener(backspaceListener);
@@ -267,6 +278,81 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Copy:
+                startCopy();
+                return true;
+            case R.id.Paste:
+                startPaste();
+                return true;
+            case R.id.Settings:
+                startSettings();
+                return true;
+            case R.id.About:
+                startAbout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private void startCopy() {
+        ClipboardManager clipboard = (ClipboardManager)
+                getSystemService(Context.CLIPBOARD_SERVICE);
+
+        if (clipboard != null) {
+            ClipData clip = ClipData.newPlainText("", mDisplay.getText());
+            clipboard.setPrimaryClip(clip);
+        }
+    }
+
+
+    private void startPaste() {
+        ClipboardManager clipboard = (ClipboardManager)
+                getSystemService(Context.CLIPBOARD_SERVICE);
+        if (clipboard != null) {
+            if (clipboard.hasPrimaryClip()
+                    && clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+                ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                String parseData = item.getText().toString();
+                if (isNumeric(parseData))
+                    mDisplay.setText(parseData);
+            }
+        }
+    }
+
+    private void startSettings() {
+        Intent activityIntent = new Intent(getApplicationContext(), Settings.class);
+        startActivity(activityIntent);
+    }
+
+    private void startAbout() {
+        Intent activityIntent = new Intent(getApplicationContext(), about.class);
+        startActivity(activityIntent);
+    }
+
+    public static boolean isNumeric(String text) {
+        if (text == null)
+            return false;
+
+        try {
+            Double.parseDouble(text);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return true;
+    }
+
     private void displayText(String display, String display3) {
         display = display.replace('.', ',');
         mDisplay.setText(display);
@@ -277,6 +363,7 @@ public class MainActivity extends AppCompatActivity {
             mDisplay4.setText(display);
         }
     }
+
     private void displayText(String display) {
         display = display.replace('.', ',');
         mDisplay.setText(display);

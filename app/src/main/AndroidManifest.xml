@@ -9,6 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Calc_307_PIE_Rybakov">
+
+        <activity
+            android:name=".Settings"
+            android:label="Настройки" />
+
+        <activity
+            android:name=".about"
+            android:label="О калькуляторе" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
